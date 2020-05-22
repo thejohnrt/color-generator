@@ -1,0 +1,140 @@
+html, body {
+  margin:0;
+  padding:0;
+  font-family:sans-serif;
+}
+
+#color-generator {
+  background-color:#222222;
+  text-align:center;
+  cursor:crosshair !important;
+  height:100vh;
+  width:100vw;
+}
+
+#howto-text {
+  color: #555555;
+  font-size:2.3em;
+  position:absolute;
+  top:17%;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+#history-text {
+  padding:11px 23px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  color: #CCCCCC;
+  font-size:1.7em;
+}
+
+#history-container {
+  height:42%;
+  width:23%;
+  position:absolute;
+  bottom:0;
+  min-height:299px;
+  min-width:211px;
+}
+
+#color-list {
+  height:calc(100% - 23px - 11px);
+  width:100%;
+  padding:2px 0;
+  background-color:#EEEEEE;
+  border-radius:0 23px 0 0;
+  -webkit-box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.23);
+  box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.23);
+  border-bottom:unset;
+  text-align:center;
+  overflow-y:scroll;
+}
+
+#toggle-arrow {
+  margin:0;
+  padding:0 0 11px 0;
+  height:23px;
+  font-size:1.7em;
+  opacity:.71;
+  color:#FFFFFF;
+}
+
+#color-list::-webkit-scrollbar {width:0 !important; }
+#color-list { overflow: -moz-scrollbars-none; -ms-overflow-style: none; }
+
+.color-item {
+  height:72px;
+  width:100%;
+  margin:11px 0;
+  padding-bottom:2px;
+  text-align:center;
+  display:flex;
+}
+
+.color-item:first-of-type { margin-top:9px; }
+.color-item:last-of-type {}
+
+.color-chip {
+  margin:auto 0 auto 17px;
+  padding:19px;
+  height:23px;
+  width:23px;
+  border: 2px inset;
+}
+
+.color-hex {
+  margin:auto;
+  font-size:1.7em;
+}
+
+@keyframes add {
+  0% {
+    -webkit-box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.0);
+    box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.0);
+  }
+  100% {
+    -webkit-box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.23);
+    box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.23);
+  }
+}
+
+@keyframes removeShadow {
+  0% {
+    -webkit-box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.23);
+    box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.23);
+  }
+  100% {
+    -webkit-box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.0);
+    box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.0);
+  }
+}
+
+.no-box-shadow {
+    animation:removeShadow 1s;
+    -webkit-box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.0) !important;
+    box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.0) !important;
+}
+
+.show-history {
+  animation:show 1s;
+  bottom:0;
+  padding-bottom:0;
+  margin-bottom:0;
+}
+
+.hide-history {
+  animation:hide 1s;
+  bottom:-42% !important;
+  padding-bottom:23px;
+  margin-bottom:11px;
+}
+
+::-moz-selection {
+  background-color:transparent;
+}
+
+::selection {
+  background-color:transparent;
+}
