@@ -3,18 +3,34 @@ import './styles.css';
 import { Color } from './components/Color'
 import { disableBodyScroll } from 'body-scroll-lock';
 import $ from 'jquery';
+import { connect } from 'react-redux';
+import { toggleColorType, toggleHistory, toggleGrayscale } from './redux';
+
+/* React-Redux Connect */
+const mapStateToProps = (state) => {
+  return {
+    colorType: state.colorType,
+    historyVisible: state.historyVisible,
+    generateGrayscale: state.generateGrayscale
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleColorType: () => dispatch( toggleColorType() ),
+    toggleHistory: () => dispatch( toggleHistory() ),
+    toggleGrayscale: () => dispatch( toggleGrayscale() )
+  }
+}
 
 class ColorGenerator extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      colors: [],
-      isVisible: true
+      colors: []
     };
     this.anotherColor = this.anotherColor.bind(this);
     this.colorRollback = this.colorRollback.bind(this);
-    this.generateHex = this.generateHex.bind(this);
-    this.toggleColorPanel = this.toggleColorPanel.bind(this);
   }
 
   anotherColor(clickedObject) {
@@ -22,18 +38,26 @@ class ColorGenerator extends PureComponent {
     || clickedObject.target.id === "howto-text") {
       $("#howto-text").remove();
       $("#history-text").remove();
-      var colorHex = this.generateHex();
+      var colorHex = this.generateColor();
       this.setState({
         colors: this.state.colors.concat(
               {
-                hex:colorHex
+                hex:colorHex,
+                rgb: this.hexToRgb(colorHex)
               }) // end concat()
             }); //end setState
         } // end if
     } // end anotherColor
 
-    generateHex() {
-      var generatedColor = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
+    generateColor() {
+      var generatedColor = "";
+      if (this.props.generateGrayscale) {
+        generatedColor = Math.floor(Math.random()*16).toString(16).toUpperCase();
+        generatedColor = generatedColor + Math.floor(Math.random()*16).toString(16).toUpperCase();
+        generatedColor = generatedColor.repeat(3);
+        return "#" + generatedColor;
+      } else {
+      generatedColor = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
       while (generatedColor.length < 6) {
         generatedColor = Math.floor(Math.random()*16777215).toString(16).toUpperCase();
       }
@@ -41,6 +65,7 @@ class ColorGenerator extends PureComponent {
             this.hexToRgb("#" + generatedColor).g + "\n" +
             this.hexToRgb("#" + generatedColor).b); */
       return "#" + generatedColor;
+    }
     }
 
 /* Tim Down: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb */
@@ -80,35 +105,22 @@ componentDidMount() {
     $('#color-generator').css("background-color", bgRollbackColor);
   }
 
-  toggleColorPanel() {
-    var heightToMove = $('#history-container').css("height");
-    heightToMove = parseInt(heightToMove.substring(0,heightToMove.length-2),10);
-    heightToMove = heightToMove - 23 - 11;
-
-    if (this.state.isVisible) {
-      $( "#history-container" ).animate({ bottom: "-" + heightToMove }, 1000);
-      $('#color-list').addClass("no-box-shadow");
-      $('#toggle-arrow').html("&and;");
-      this.setState({ isVisible: false });
-    } else {
-      $( "#history-container" ).animate({ bottom:"0" }, 1000);
-      $('#color-list').removeClass("no-box-shadow");
-      $('#toggle-arrow').html("&or;");
-      this.setState({ isVisible: true });
-    }
-  }
-
-  render() {
+  render(props) {
+    const { toggleHistory, toggleColorType, colorType, toggleGrayscale } = this.props;
     if(this.state.colors.length > 0) {
       var bgColor = this.state.colors[this.state.colors.length - 1].hex;
   }
     const colorList = this.state.colors.map( (color, index) =>
-    <Color key={index} hex={color.hex} function={this.colorRollback}/>)
+    <Color key={index} colorNames={color} colorType={colorType} function={this.colorRollback}/>);
     return (
     <div id="color-generator" style={{backgroundColor:bgColor}} onClick={this.anotherColor}>
       <p id="howto-text" onClick={this.anotherColor}>Click, Tap, or Press <code>space</code></p>
       <div id="history-container">
-        <p id="toggle-arrow" onClick={this.toggleColorPanel}>&or;</p>
+        <div id="buttons">
+        <p id="history-arrow" onClick={toggleHistory}>&or;</p>
+        <p id="grayscale" onClick={toggleGrayscale}>&#9728;</p>
+        <p id="color-type" onClick={toggleColorType}>{colorType}</p>
+        </div>  { /* end buttons */ }
       <div id="color-list">
         <div id="history-text">
           <p>Your color history will appear here.</p>
@@ -122,4 +134,4 @@ componentDidMount() {
 }
 }
 
-export { ColorGenerator };
+export default connect(mapStateToProps, mapDispatchToProps)(ColorGenerator);

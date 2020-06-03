@@ -1,13 +1,13 @@
 html, body {
   margin:0;
   padding:0;
-  font-family:sans-serif;
+  font-family:monospace;
+  cursor:crosshair;
 }
 
 #color-generator {
   background-color:#222222;
   text-align:center;
-  cursor:crosshair !important;
   height:100vh;
   width:100vw;
 }
@@ -22,27 +22,29 @@ html, body {
 }
 
 #history-text {
-  padding:11px 23px;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  color: #CCCCCC;
-  font-size:1.7em;
+  padding:0 9%;
+  color: #BBBBBB;
+  font-size:1.5em;
+  height:100%;
 }
 
 #history-container {
+  display:flex;
+  flex-direction:column;
   height:42%;
-  width:23%;
+  width:17%;
+  min-width:230px;
+  min-height:230px;
   position:absolute;
   bottom:0;
-  min-height:299px;
-  min-width:211px;
 }
 
 #color-list {
-  height:calc(100% - 23px - 11px);
+  height:100%;
   width:100%;
-  padding:2px 0;
   background-color:#EEEEEE;
   border-radius:0 23px 0 0;
   -webkit-box-shadow: 0px 0px 17px 0px rgba(0,0,0,0.23);
@@ -52,41 +54,60 @@ html, body {
   overflow-y:scroll;
 }
 
-#toggle-arrow {
-  margin:0;
-  padding:0 0 11px 0;
-  height:23px;
-  font-size:1.7em;
-  opacity:.71;
-  color:#FFFFFF;
+#buttons {
+  width:100%;
+  height:5em;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items:center;
 }
+#buttons > * {
+  display:inline;
+  margin:0;
+  padding:0;
+  opacity:.5;
+  color:#FFFFFF;
+  font-size:2.3em;
+}
+#color-type { font-size:1.23em; }
 
 #color-list::-webkit-scrollbar {width:0 !important; }
 #color-list { overflow: -moz-scrollbars-none; -ms-overflow-style: none; }
 
 .color-item {
-  height:72px;
+  height:33.3%;
   width:100%;
-  margin:11px 0;
-  padding-bottom:2px;
+  margin:0;
   text-align:center;
   display:flex;
+  flex-direction:row;
+  justify-content:center;
 }
 
-.color-item:first-of-type { margin-top:9px; }
-.color-item:last-of-type {}
+.current-color {
+  background-color:rgba(187,187,187,0.5);
+  border-top:1px rgba(0,0,0,0.23) inset;
+  border-bottom:1px rgba(0,0,0,0.23) inset;
+}
 
 .color-chip {
-  margin:auto 0 auto 17px;
-  padding:19px;
-  height:23px;
-  width:23px;
-  border: 2px inset;
+  height:8vh;
+  width:8vh;
+  min-height:50px;
+  min-width:50px;
+  margin:auto 0 auto 1em;
+  border: .1em inset;
+
 }
 
-.color-hex {
+.color-name {
   margin:auto;
-  font-size:1.7em;
+  font-size:2em;
+}
+
+.color-name.rgb {
+  font-size:1.5em;
 }
 
 @keyframes add {
@@ -137,4 +158,15 @@ html, body {
 
 ::selection {
   background-color:transparent;
+}
+
+@media only screen and (max-width:500px) {
+  body { font-size:.82em; }
+  #howto-text {  }
+  #history-container { width:100%; }
+  #color-list { border-radius:23px 23px 0 0; }
+  .color-chip {
+    margin-left:9%;
+    width:calc(23% * 2);
+  }
 }

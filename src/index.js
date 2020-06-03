@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ColorGenerator } from './ColorGenerator';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import ColorGenerator from './ColorGenerator';
 
 ReactDOM.render(
-  <React.StrictMode>
+      <Provider store={store}>
     <ColorGenerator />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('app-body')
 );
