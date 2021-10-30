@@ -35,7 +35,6 @@ export const colorReducer = (state = initialState, action) => {
 
     if (state.historyVisible) {
       $( "#control-panel" ).animate({ bottom: "-" + heightToMove }, 500);
-      $('#color-list').addClass("no-box-shadow");
       $('#history-arrow').html("&and;");
       $('#history-arrow').attr("aria-pressed", "false");
       $('#color-type').animate({opacity:"0"}, 400);
@@ -45,10 +44,9 @@ export const colorReducer = (state = initialState, action) => {
     }
   } else {
     $( "#control-panel" ).animate({ bottom:"0" }, 500);
-    $('#color-list').removeClass("no-box-shadow");
     $('#history-arrow').html("&or;");
     $('#history-arrow').attr("aria-pressed", "true");
-    $('#color-type').animate({opacity:".5"}, 400);
+    $('#color-type').animate({opacity:"1"}, 400);
     return {
       ...state,
       historyVisible: true
