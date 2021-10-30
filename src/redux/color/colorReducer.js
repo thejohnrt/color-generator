@@ -11,60 +11,72 @@ const initialState = {
 export const colorReducer = (state = initialState, action) => {
   switch(action.type) {
     case TOGGLE_COLOR_TYPE:
-    if (state.colorType == "HEX") {
+    if (state.colorType === "HEX") {
+      $('#color-type').attr('aria-label', "View Hex");
       return {
-        ... state,
+        ...state,
         colorType: "RGB"
       }
-    } else if (state.colorType == "RGB") {
+    } else if (state.colorType === "RGB") {
+      $('#color-type').attr('aria-label', "View RGB");
       return {
-        ... state,
+        ...state,
         colorType: "HEX"
       }
     }
+    break;
 
     case TOGGLE_HISTORY:
-    var heightToMove = $('#history-container').css("height");
+    var heightToMove = $('#control-panel').css("height");
     var controlsHeight = $('#buttons').css("height");
     controlsHeight =  parseInt(controlsHeight.substring(0,heightToMove.length-2),10);
     heightToMove = parseInt(heightToMove.substring(0,heightToMove.length-2),10);
     heightToMove = heightToMove - controlsHeight + 2;
 
     if (state.historyVisible) {
-      $( "#history-container" ).animate({ bottom: "-" + heightToMove }, 500);
+      $( "#control-panel" ).animate({ bottom: "-" + heightToMove }, 500);
       $('#color-list').addClass("no-box-shadow");
       $('#history-arrow').html("&and;");
+      $('#history-arrow').attr("aria-pressed", "false");
       $('#color-type').animate({opacity:"0"}, 400);
     return {
-      ... state,
+      ...state,
       historyVisible: false
     }
   } else {
-    $( "#history-container" ).animate({ bottom:"0" }, 500);
+    $( "#control-panel" ).animate({ bottom:"0" }, 500);
     $('#color-list').removeClass("no-box-shadow");
     $('#history-arrow').html("&or;");
+    $('#history-arrow').attr("aria-pressed", "true");
     $('#color-type').animate({opacity:".5"}, 400);
     return {
-      ... state,
+      ...state,
       historyVisible: true
     }
     }
 
     case TOGGLE_GRAYSCALE:
       if (state.generateGrayscale) {
-        $('#grayscale').css("color","#FFFFFF");
+        $('#grayscale').attr("aria-pressed", "false");
+        $('#grayscale').html("☀");
+        $('#grayscale').css("scale", "");
+
         return {
-          ... state,
+          ...state,
           generateGrayscale: false
         }
       } else {
-        $('#grayscale').css("color","#000000");
+        $('#grayscale').attr("aria-pressed", "true");
+        $('#grayscale').html("•");
+        $('#grayscale').css("scale", "1.75");
+
         return {
-          ... state,
+          ...state,
           generateGrayscale: true
         }
       }
 
-    default: return state
+    default:
+      return state;
   }
 };

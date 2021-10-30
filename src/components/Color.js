@@ -8,11 +8,12 @@ function Color(props) {
     props.colorNames.rgb.b.toString().padStart(3, " ")]
   var colorName;
   var classes = "color-name";
-  if (colorType == "HEX") {
+  if (colorType === "HEX") {
     colorName = <p className={classes}>{hex}</p>;
-  } else if (colorType == "RGB") {
+  } else if (colorType === "RGB") {
     classes += " rgb";
-    colorName = <p className={classes}>
+    const ariaLabelRGB = `Red: ${rgb[0]}, Green: ${rgb[1]}, Blue: ${rgb[2]}`;
+    colorName = <p className={classes} aria-label={ariaLabelRGB}>
     <span style={{color:"rgb(125,0,0)"}}>{rgb[0]}&nbsp;</span>
     <span style={{color:"rgb(0,125,0)"}}>{rgb[1]}&nbsp;</span>
     <span style={{color:"rgb(0,0,175)"}}>{rgb[2]}</span>

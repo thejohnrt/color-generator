@@ -68,7 +68,7 @@ class ColorGenerator extends PureComponent {
     }
     }
 
-/* Tim Down: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb */
+/* Thanks to Tim Down: https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb */
 
     hexToRgb(hex) {
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -90,6 +90,7 @@ componentDidMount() {
   /* Register the Space (32) key as a click */
       $(window).keyup(function(event) {
           if (event.keyCode === 32) {
+            event.preventDefault();
               $("#color-generator").click();
           } // end if
       }); // end $(tabs).keyup
@@ -113,15 +114,15 @@ componentDidMount() {
     const colorList = this.state.colors.map( (color, index) =>
     <Color key={index} colorNames={color} colorType={colorType} function={this.colorRollback}/>);
     return (
-    <div id="color-generator" style={{backgroundColor:bgColor}} onClick={this.anotherColor}>
-      <p id="howto-text" onClick={this.anotherColor}>Click, Tap, or Press <code>space</code></p>
-      <div id="history-container">
+    <div id="color-generator" tabIndex="0" style={{backgroundColor:bgColor}} onClick={this.anotherColor}>
+      <p id="howto-text" onClick={this.anotherColor}>Click, Tap, or Press <code>space</code> to generate a color</p>
+      <div id="control-panel">
         <div id="buttons">
-        <p id="history-arrow" onClick={toggleHistory}>&or;</p>
-        <p id="grayscale" onClick={toggleGrayscale}>&#9728;</p>
-        <p id="color-type" onClick={toggleColorType}>{colorType}</p>
+        <button id="history-arrow" aria-label="Toggle Color History" aria-pressed="true" tabIndex="0" onClick={toggleHistory}>&or;</button>
+        <button id="grayscale" aria-label="Toggle Grayscale" aria-pressed="false" tabIndex="0" onClick={toggleGrayscale}>☀</button>
+        <button id="color-type" aria-label="View RGB" tabIndex="0" onClick={toggleColorType}>{colorType}</button>
         </div>  { /* end buttons */ }
-      <div id="color-list">
+      <div id="color-list" aria-live="polite">
         <div id="history-text">
           <p>Your color history will appear here.</p>
           <p>Click on a color to return to it.</p>
