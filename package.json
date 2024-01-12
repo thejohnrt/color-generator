@@ -7,16 +7,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1",
     "vite": "^5.0.8"
   },
   "dependencies": {
-    "body-scroll-lock": "^4.0.0-beta.0",
     "colorjs.io": "^0.4.5"
   }
 }
