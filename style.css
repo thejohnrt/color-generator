@@ -1,0 +1,25 @@
+ol[role="list"],
+ul[role="list"] {
+  padding: 0;
+  list-style: none;
+}
+
+#color-history {
+  margin: 0;
+  padding: 0 2ch;
+  width: 30ch;
+  height: 15ex;
+  overflow: auto;
+  background-color: #242424;
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+}
+
+#color-history li {
+  padding: .25em;
+}
+
+#color-history li+li {
+  border-block-start: .125em solid currentColor;
+}
