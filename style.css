@@ -22,19 +22,37 @@ ul[role="list"] {
   border-inline-start: 0;
   border-block-end: 0;
   border-radius: 0 0.975em 0 0;
+  width: 30em;
 }
 
-#color-history {
-  margin: 0;
-  padding: 0 2ch;
+.history-wrapper {
   height: 15ex;
   overflow: auto;
 }
 
+#color-history thead {
+  position: sticky;
+  inset-block-start: -.125em;
+  background-color: #242424;
+}
+
 #color-history li {
   padding: .25em;
+  display: flex;
+  align-items: center;
+  gap: 1ch;
 }
 
 #color-history li+li {
   border-block-start: .125em solid currentColor;
+}
+
+.swatch {
+  flex: 0 0 3ch;
+  height: 3ch;
+  border: inset .0625em #242424;
+}
+
+button[data-action="fill"] {
+  font-size: .75rem;
 }
