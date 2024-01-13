@@ -4,6 +4,8 @@ import { generateColor } from './generate.js';
 import { addToHistory } from './history.js';
 import toolbar from './toolbar.js';
 
+// TODO: add only most recent generation to output, leave history in table
+
 const color = generateColor();
 const colorHistory = [];
 const optionsForm = document.forms.options;
@@ -13,7 +15,18 @@ document.querySelector('#app').innerHTML = `
       <form id="options">
       ${toolbar}
       <output for="color-space grayscale">
-      <ul role="list" id="color-history"></ul>
+      <div class="history-wrapper">
+      <table id="color-history">
+      <thead>
+        <tr>
+          <th scope="col">Swatch</th>
+          <th scope="col">Code</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      </table>
+      </div>
       </output>
       </form>
 `;
